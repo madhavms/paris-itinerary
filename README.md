@@ -15,8 +15,8 @@ Once Pages finishes its first build, the itinerary is live at:
 
 | File | What it is | Edit it? |
 |------|------------|----------|
-| `index.html` | The whole itinerary — layout, styling, and all the day-by-day **content** (in the `DAYS` data near the bottom of the file). ~50 KB, quick to open. | ✅ This is the one to edit. |
-| `images.js` | The 16 landmark photos, embedded as data. ~2.6 MB. | ⛔ Rarely — only to swap a photo. |
+| `index.html` | The whole itinerary — layout, styling, and all the day-by-day **content** (in the `DAYS` data near the bottom of the file). ~52 KB, quick to open. | ✅ This is the one to edit. |
+| `img/*.jpg` | The 16 landmark photos as individual files, lazy-loaded as you scroll (keeps first load fast). To swap one, replace the file, keep the name. | ⛔ Rarely. |
 | `manifest.webmanifest`, `sw.js`, `icon-*.png`, `icon.svg`, `apple-touch-icon.png` | Make it an installable app that works offline. | ⛔ Leave as-is. |
 | `.github/workflows/deploy.yml` | Auto-publishes to GitHub Pages on every push. | ⛔ Leave as-is. |
 
