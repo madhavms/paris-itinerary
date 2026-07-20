@@ -182,6 +182,17 @@
   .chip.book{background:var(--gold-wash);border-color:color-mix(in srgb,var(--gold) 45%,transparent);color:var(--ink)}
   .chip .d{width:5px;height:5px;border-radius:50%;background:var(--gold)}
   .chip.book .d{background:var(--gold);box-shadow:0 0 0 3px var(--gold-wash)}
+  /* collapsible "good to know" */
+  .more{margin-top:18px;border-top:1px solid var(--line-soft)}
+  .more summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:13px 0 3px;
+    font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);
+    -webkit-tap-highlight-color:transparent;user-select:none}
+  .more summary::-webkit-details-marker{display:none}
+  .more summary::after{content:"+";margin-left:auto;font-size:1.15rem;line-height:1;color:var(--ink-faint);transition:transform .2s}
+  .more[open] summary::after{content:"–"}
+  .more summary:hover{color:var(--ink)}
+  .more .more-in{padding-bottom:4px}
+  .more .tips{margin-top:12px}
 
   /* transit connector */
   .hop{display:flex;align-items:center;gap:14px;padding:14px 0 14px 38px;position:relative}
@@ -246,6 +257,15 @@
   }
   @media (max-width:760px){
     body{font-size:16px}
+    /* snappy: no scroll-in animation on phones — content is there instantly */
+    .reveal{opacity:1;transform:none;transition:none}
+    section{padding:46px 0}
+    .day{padding-top:36px}
+    header.hero{min-height:86svh}
+    .day-hero img{height:200px}
+    .card{margin-top:14px}
+    .card .media img{height:158px}
+    .stop{padding-bottom:4px}
     .wrap{padding:0 18px}
     nav.days .nav-inner{padding:7px 12px;gap:6px}
     nav.days .brand{display:none}
@@ -276,7 +296,7 @@
   }
   @media (max-width:430px){
     header.hero h1{font-size:clamp(2.6rem,13vw,3.6rem)}
-    .day-hero img{height:210px}
+    .day-hero img{height:182px}
     .glance{grid-template-columns:1fr 1fr}
     .theme-btn .tlabel{display:none}
   }
@@ -519,9 +539,10 @@
   <p class="note">Prices &amp; hours reflect 2026 published rates and can change — reconfirm on official sites when booking. Photography by Wikimedia Commons contributors. Arranged with love, and a bias toward slow mornings and good coffee.</p>
 </footer>
 
-<script src="images.js"></script>
 <script>
-const IMG = window.IMG || {};
+const IMG_KEYS = ["trocadero","eiffel","arc","champs","concorde","louvre","pyramid","tuileries",
+  "orsay","saintgermain","montmartre","notredame","saintechapelle","marais","versailles","seine"];
+const IMG = Object.fromEntries(IMG_KEYS.map(k=>[k,`img/${k}.jpg`]));
 
 const DAYS = [
   {
@@ -713,18 +734,25 @@ function metaHTML(m){
 }
 function stopHTML(s){
   const rc = s.romance ? " romance" : "";
+  const hasMore = s.tips || s.chips;
+  const moreLabel = s.chips ? "Tips &amp; booking" : "Good to know";
   return `
   <div class="stop${rc}">
     <div class="dot"></div>
     <span class="time">${s.time}</span><span class="kind">${s.kind}</span>
     <div class="card${rc}">
-      <div class="media"><img loading="lazy" src="${IMG[s.img]||''}" alt="${s.name}"></div>
+      <div class="media"><img loading="lazy" decoding="async" src="${IMG[s.img]||''}" alt="${s.name}"></div>
       <div class="body">
         <h4>${s.name}</h4>
         <p class="lede">${s.lede}</p>
         ${s.meta?metaHTML(s.meta):""}
-        ${s.tips?`<ul class="tips">${s.tips.map(tipHTML).join("")}</ul>`:""}
-        ${s.chips?`<div class="chips">${s.chips.map(chipHTML).join("")}</div>`:""}
+        ${hasMore?`<details class="more">
+          <summary>${moreLabel}</summary>
+          <div class="more-in">
+            ${s.tips?`<ul class="tips">${s.tips.map(tipHTML).join("")}</ul>`:""}
+            ${s.chips?`<div class="chips">${s.chips.map(chipHTML).join("")}</div>`:""}
+          </div>
+        </details>`:""}
       </div>
     </div>
   </div>`;
@@ -740,7 +768,7 @@ function dayHTML(d){
   <section class="day reveal" id="${d.id}">
     <div class="day-hero">
       ${d.ribbon?`<span class="ribbon">✦ ${d.ribbon}</span>`:""}
-      <img src="${IMG[d.hero]||''}" alt="${d.title}">
+      <img loading="lazy" decoding="async" src="${IMG[d.hero]||''}" alt="${d.title}">
       <div class="grad"></div>
       <div class="cap">
         <div class="num">${d.num}</div>

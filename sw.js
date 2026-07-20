@@ -1,9 +1,10 @@
 // Service worker for the Paris Summer Trip itinerary.
 // Strategy: network-first, so edits pushed to the site appear as soon as you're
 // online — with a cache fallback so the itinerary still opens offline in Paris.
-const CACHE = 'paris-trip-v1';
+const CACHE = 'paris-trip-v2';
 const CORE = [
-  './', './index.html', './images.js', './manifest.webmanifest',
+  './', './index.html', './manifest.webmanifest',
+  './img/trocadero.jpg',
   './icon-192.png', './icon-512.png', './apple-touch-icon.png'
 ];
 
