@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Paris Story · 30 Jul – 3 Aug 2026</title>
+</head>
+<body>
+<style>
+  :root{
+    --serif:"Didot","Bodoni 72","GFS Didot","Playfair Display",Georgia,"Times New Roman",serif;
+    --sans:"Avenir Next","Avenir","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    --mono:"SF Mono","JetBrains Mono",ui-monospace,"Menlo",monospace;
+
+    --paper:#eceae4; --paper-2:#f5f3ed; --paper-3:#e2dfd6;
+    --ink:#15243c; --ink-soft:#4a5a72; --ink-faint:#75839a;
+    --gold:#a5812f; --gold-bright:#c39a4d; --gold-wash:rgba(165,129,47,.10);
+    --rose:#b96f66; --rose-wash:rgba(185,111,102,.12);
+    --line:rgba(21,36,60,.15); --line-soft:rgba(21,36,60,.08);
+    --card:#f5f3ed; --card-sh:0 1px 2px rgba(21,36,60,.06),0 18px 40px -24px rgba(21,36,60,.35);
+    --hero-a:#0b1626; --hero-b:#1c2c46;
+    --maxw:1080px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#0b1320; --paper-2:#111c2c; --paper-3:#0f1826;
+      --ink:#eef1f7; --ink-soft:#a9b8cf; --ink-faint:#7386a1;
+      --gold:#d3ac63; --gold-bright:#e6c583; --gold-wash:rgba(211,172,99,.12);
+      --rose:#dd968c; --rose-wash:rgba(221,150,140,.14);
+      --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.07);
+      --card:#111c2c; --card-sh:0 1px 2px rgba(0,0,0,.4),0 26px 50px -28px rgba(0,0,0,.75);
+      --hero-a:#060c16; --hero-b:#101d31;
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#eceae4; --paper-2:#f5f3ed; --paper-3:#e2dfd6;
+    --ink:#15243c; --ink-soft:#4a5a72; --ink-faint:#75839a;
+    --gold:#a5812f; --gold-bright:#c39a4d; --gold-wash:rgba(165,129,47,.10);
+    --rose:#b96f66; --rose-wash:rgba(185,111,102,.12);
+    --line:rgba(21,36,60,.15); --line-soft:rgba(21,36,60,.08);
+    --card:#f5f3ed; --card-sh:0 1px 2px rgba(21,36,60,.06),0 18px 40px -24px rgba(21,36,60,.35);
+    --hero-a:#0b1626; --hero-b:#1c2c46;
+  }
+  :root[data-theme="dark"]{
+    --paper:#0b1320; --paper-2:#111c2c; --paper-3:#0f1826;
+    --ink:#eef1f7; --ink-soft:#a9b8cf; --ink-faint:#7386a1;
+    --gold:#d3ac63; --gold-bright:#e6c583; --gold-wash:rgba(211,172,99,.12);
+    --rose:#dd968c; --rose-wash:rgba(221,150,140,.14);
+    --line:rgba(255,255,255,.13); --line-soft:rgba(255,255,255,.07);
+    --card:#111c2c; --card-sh:0 1px 2px rgba(0,0,0,.4),0 26px 50px -28px rgba(0,0,0,.75);
+    --hero-a:#060c16; --hero-b:#101d31;
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    overflow-x:clip;}
+  html{overflow-x:clip}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  h1,h2,h3,h4{margin:0;font-weight:400;text-wrap:balance;line-height:1.05}
+  ::selection{background:var(--gold);color:#fff}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);font-weight:500}
+  .measure{max-width:64ch}
+
+  /* progress + nav */
+  #bar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--gold),var(--rose));z-index:60;transition:width .12s linear}
+  nav.days{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 86%,transparent);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+  nav.days .row{display:flex;gap:6px;align-items:center;max-width:var(--maxw);margin:0 auto;padding:10px 18px;overflow-x:auto;scrollbar-width:none}
+  nav.days .row::-webkit-scrollbar{display:none}
+  nav.days .brand{font-family:var(--serif);font-size:1.05rem;font-style:italic;letter-spacing:.01em;margin-right:auto;white-space:nowrap;padding-right:14px}
+  nav.days a{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
+    color:var(--ink-soft);padding:7px 12px;border-radius:100px;white-space:nowrap;transition:.2s;border:1px solid transparent}
+  nav.days a:hover{color:var(--ink);background:var(--gold-wash)}
+  nav.days a.active{color:var(--ink);border-color:var(--line);background:var(--gold-wash)}
+  .theme-btn{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;background:none;border:1px solid var(--line);color:var(--ink-soft);
+    border-radius:100px;padding:7px 11px;cursor:pointer;white-space:nowrap}
+  .theme-btn:hover{color:var(--ink);border-color:var(--gold)}
+
+  /* HERO */
+  header.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;
+    color:#f6f2e9;overflow:hidden;isolation:isolate}
+  header.hero .bg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center 30%}
+  header.hero .veil{position:absolute;inset:0;z-index:-1;
+    background:linear-gradient(180deg,rgba(9,17,30,.55) 0%,rgba(9,17,30,.20) 32%,rgba(9,17,30,.35) 62%,rgba(8,14,24,.92) 100%)}
+  header.hero .top{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-start;
+    padding:26px 30px;z-index:2}
+  header.hero .top .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;color:#e9c877}
+  header.hero .masthead{position:relative;z-index:2;padding:0 30px 8vh}
+  header.hero .ampersand{font-family:var(--serif);font-style:italic}
+  header.hero h1{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;
+    font-size:clamp(3.2rem,11vw,8.4rem);line-height:.92;text-shadow:0 2px 40px rgba(0,0,0,.4)}
+  header.hero h1 .sub{display:block;font-size:clamp(1.1rem,3.6vw,2rem);font-style:italic;color:#e6d9c0;margin-top:.5rem;letter-spacing:0}
+  header.hero .lede{max-width:52ch;margin:1.6rem 0 0;color:#e7dece;font-size:1.06rem}
+  header.hero .facts{display:flex;flex-wrap:wrap;gap:0;margin-top:2.2rem;border-top:1px solid rgba(255,255,255,.22)}
+  header.hero .facts div{padding:16px 26px 4px 0;margin-right:26px}
+  header.hero .facts .k{font-family:var(--mono);font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:#d8b877}
+  header.hero .facts .v{font-family:var(--serif);font-size:1.35rem;margin-top:3px}
+  .scrollcue{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:2;font-family:var(--mono);
+    font-size:.6rem;letter-spacing:.3em;color:rgba(246,242,233,.7);text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .scrollcue span{width:1px;height:34px;background:linear-gradient(rgba(246,242,233,.7),transparent);animation:cue 2.2s infinite}
+  @keyframes cue{0%{opacity:.2;transform:scaleY(.4)}50%{opacity:1}100%{opacity:.2;transform:scaleY(.4)}}
+
+  /* section shells */
+  section{padding:clamp(56px,9vw,110px) 0}
+  .sec-head{display:flex;flex-direction:column;gap:14px;margin-bottom:44px}
+  .sec-head h2{font-family:var(--serif);font-size:clamp(2rem,5vw,3.4rem);letter-spacing:-.01em}
+  .rule{height:1px;background:var(--line);border:0;margin:0}
+
+  /* AT A GLANCE */
+  .glance{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .glance .cell{background:var(--paper-2);padding:22px 20px}
+  .glance .k{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+  .glance .v{font-family:var(--serif);font-size:1.5rem;margin-top:8px;line-height:1.1}
+  .glance .n{font-size:.82rem;color:var(--ink-soft);margin-top:6px}
+
+  /* DAY */
+  .day{padding-top:clamp(50px,7vw,90px)}
+  .day-hero{position:relative;border-radius:6px;overflow:hidden;margin-bottom:40px;isolation:isolate;
+    box-shadow:var(--card-sh)}
+  .day-hero img{width:100%;height:clamp(230px,42vw,420px);object-fit:cover}
+  .day-hero .grad{position:absolute;inset:0;background:linear-gradient(120deg,rgba(9,17,30,.78) 0%,rgba(9,17,30,.25) 55%,rgba(9,17,30,.05) 100%)}
+  .day-hero .cap{position:absolute;left:0;bottom:0;padding:clamp(20px,3vw,38px);color:#f6f2e9;z-index:2}
+  .day-hero .num{font-family:var(--serif);font-size:clamp(2.6rem,7vw,5rem);line-height:.8;color:#e9c877;opacity:.92}
+  .day-hero .dow{font-family:var(--mono);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:#e7dece;margin:14px 0 6px}
+  .day-hero h3{font-family:var(--serif);font-size:clamp(1.7rem,4.4vw,2.9rem)}
+  .day-hero .zone{font-style:italic;font-family:var(--serif);color:#e6d9c0;margin-top:8px;font-size:1.05rem}
+  .day-hero .ribbon{position:absolute;top:16px;right:16px;z-index:3;background:var(--rose);color:#fff;
+    font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;padding:7px 13px;border-radius:100px;
+    box-shadow:0 8px 24px -8px rgba(0,0,0,.5)}
+
+  /* timeline */
+  .timeline{position:relative;margin-left:6px}
+  .stop{position:relative;padding-left:38px;padding-bottom:8px}
+  .stop::before{content:"";position:absolute;left:8px;top:34px;bottom:-8px;width:2px;background:var(--line)}
+  .stop:last-of-type::before{display:none}
+  .stop .dot{position:absolute;left:0;top:6px;width:18px;height:18px;border-radius:50%;background:var(--paper);
+    border:2px solid var(--gold);display:grid;place-items:center}
+  .stop .dot::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+  .stop.romance .dot{border-color:var(--rose)}
+  .stop.romance .dot::after{background:var(--rose)}
+  .stop .time{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;color:var(--gold);font-variant-numeric:tabular-nums;font-weight:600}
+  .stop .kind{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-left:12px}
+  .card{background:var(--card);border:1px solid var(--line-soft);border-radius:8px;overflow:hidden;margin-top:12px;
+    box-shadow:var(--card-sh);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+  .card:hover{transform:translateY(-3px)}
+  .card.romance{border-color:color-mix(in srgb,var(--rose) 45%,transparent)}
+  .card .media{position:relative;overflow:hidden}
+  .card .media img{width:100%;height:clamp(180px,26vw,260px);object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+  .card:hover .media img{transform:scale(1.05)}
+  .card .body{padding:22px clamp(20px,3vw,30px) 26px}
+  .card h4{font-family:var(--serif);font-size:clamp(1.5rem,3.2vw,2.1rem);letter-spacing:-.01em}
+  .card .lede{color:var(--ink-soft);margin:12px 0 0;max-width:60ch}
+  .meta{display:flex;flex-wrap:wrap;gap:1px;margin-top:22px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:6px;overflow:hidden}
+  .meta div{background:var(--card);padding:11px 15px;flex:1 1 130px}
+  .meta .k{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+  .meta .v{font-size:.9rem;margin-top:4px;font-variant-numeric:tabular-nums}
+  .tips{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+  .tips li{position:relative;padding-left:24px;font-size:.93rem;color:var(--ink-soft)}
+  .tips li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border:1.5px solid var(--gold);transform:rotate(45deg)}
+  .tips li.warn::before{border-color:var(--rose);background:var(--rose)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .chip{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;padding:7px 12px;border-radius:100px;text-decoration:none;
+    border:1px solid var(--line);color:var(--ink-soft);display:inline-flex;gap:7px;align-items:center;transition:.2s}
+  .chip:hover{border-color:var(--gold);color:var(--ink)}
+  .chip.book{background:var(--gold-wash);border-color:color-mix(in srgb,var(--gold) 45%,transparent);color:var(--ink)}
+  .chip .d{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+  .chip.book .d{background:var(--gold);box-shadow:0 0 0 3px var(--gold-wash)}
+
+  /* transit connector */
+  .hop{display:flex;align-items:center;gap:14px;padding:14px 0 14px 38px;position:relative}
+  .hop::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;background:repeating-linear-gradient(var(--line) 0 5px,transparent 5px 11px)}
+  .hop .ico{font-family:var(--mono);font-size:.9rem;flex:none}
+  .hop .txt{font-family:var(--mono);font-size:.72rem;letter-spacing:.02em;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+  .hop .txt b{color:var(--ink);font-weight:600}
+
+  /* two-col essentials */
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+  .panel{background:var(--card);border:1px solid var(--line-soft);border-radius:8px;padding:26px 26px 28px;box-shadow:var(--card-sh)}
+  .panel h3{font-family:var(--serif);font-size:1.55rem;margin-bottom:4px}
+  .panel .kick{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block}
+  .panel p{color:var(--ink-soft);font-size:.95rem;margin:0 0 12px}
+  .panel ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px}
+  .panel ul li{position:relative;padding-left:22px;font-size:.93rem;color:var(--ink-soft)}
+  .panel ul li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border:1.5px solid var(--gold);transform:rotate(45deg)}
+  .panel ul li b{color:var(--ink);font-weight:600}
+  .kv{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--line-soft);font-size:.92rem}
+  .kv:last-child{border-bottom:0}
+  .kv .a{color:var(--ink-soft)}
+  .kv .b{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;color:var(--ink)}
+
+  /* checklist */
+  .check{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .check .item{background:var(--card);border:1px solid var(--line-soft);border-radius:8px;padding:18px 18px;display:flex;gap:13px;box-shadow:var(--card-sh)}
+  .check .box{flex:none;width:22px;height:22px;border:1.5px solid var(--gold);border-radius:5px;margin-top:2px}
+  .check .t{font-size:.95rem}
+  .check .t b{display:block;font-family:var(--serif);font-size:1.12rem;font-weight:400;margin-bottom:3px}
+  .check .t span{color:var(--ink-soft);font-size:.86rem}
+
+  /* phrases */
+  .phrase{display:grid;grid-template-columns:1fr auto;gap:6px 18px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+  .phrase:last-child{border-bottom:0}
+  .phrase .fr{font-family:var(--serif);font-size:1.2rem;font-style:italic}
+  .phrase .en{color:var(--ink-soft);font-size:.9rem}
+  .phrase .ph{grid-column:1/-1;font-family:var(--mono);font-size:.72rem;color:var(--gold);letter-spacing:.04em}
+
+  /* callout / versailles */
+  .callout{position:relative;border-radius:8px;overflow:hidden;box-shadow:var(--card-sh);isolation:isolate;display:grid;grid-template-columns:1.05fr 1fr}
+  .callout .img{background-size:cover;background-position:center;min-height:260px}
+  .callout .in{padding:clamp(26px,4vw,44px);background:var(--card)}
+  .callout .in h3{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.6rem)}
+  .callout .badge{display:inline-block;font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--rose);border:1px solid color-mix(in srgb,var(--rose) 50%,transparent);border-radius:100px;padding:5px 11px;margin-bottom:16px}
+
+  footer{background:linear-gradient(180deg,var(--paper),var(--paper-3));border-top:1px solid var(--line);
+    text-align:center;padding:clamp(60px,10vw,120px) 24px 60px;margin-top:40px}
+  footer .fx{font-family:var(--serif);font-style:italic;font-size:clamp(2rem,6vw,3.6rem);color:var(--ink)}
+  footer .amp{color:var(--gold)}
+  footer .meta{display:inline-flex;justify-content:center;background:none;border:0;gap:34px;margin-top:26px;flex-wrap:wrap}
+  footer .meta div{background:none;padding:0;flex:none;text-align:center}
+  footer .note{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--ink-faint);margin-top:40px;max-width:60ch;margin-left:auto;margin-right:auto;line-height:1.9}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .scrollcue span{animation:none}
+    .card,.card .media img{transition:none}
+  }
+  @media (max-width:760px){
+    body{font-size:16px}
+    .callout{grid-template-columns:1fr}
+    header.hero .facts div{padding:14px 18px 4px 0;margin-right:18px}
+    nav.days .brand{display:none}
+  }
+  @media print{
+    nav.days,#bar,.scrollcue,.theme-btn{display:none}
+    .card,.panel{box-shadow:none;break-inside:avoid}
+    header.hero{min-height:70vh}
+  }
+</style>
+
+<div id="bar"></div>
+
+<nav class="days">
+  <div class="row">
+    <span class="brand">A Paris Story</span>
+    <a href="#arrival">Arrival</a>
+    <a href="#day1">Day 1</a>
+    <a href="#day2">Day 2</a>
+    <a href="#day3">Day 3</a>
+    <a href="#day4">Day 4</a>
+    <a href="#essentials">Essentials</a>
+    <button class="theme-btn" id="themeBtn" type="button">◐ Theme</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="bg" id="heroBg"></div>
+  <div class="veil"></div>
+  <div class="top">
+    <span class="tag">A Paris Story</span>
+    <span class="tag">30 Jul – 3 Aug 2026</span>
+  </div>
+  <div class="masthead wrap">
+    <p class="eyebrow" style="color:#e9c877">Five slow days · One city of light</p>
+    <h1>A Pre-Wedding<br><span class="ampersand" style="color:#e9c877">Week</span> in Paris
+      <span class="sub">— early light, grand avenues &amp; unhurried afternoons</span>
+    </h1>
+    <p class="lede">From an early-morning pre-wedding photoshoot to impressionist afternoons and hilltop basilicas — an itinerary arranged so you drift, never dash. Every day flows through one neighbourhood at a time.</p>
+    <div class="facts">
+      <div><div class="k">Arrive</div><div class="v">Thu 30 Jul</div></div>
+      <div><div class="k">Depart</div><div class="v">Mon 3 Aug</div></div>
+      <div><div class="k">Days</div><div class="v">Five</div></div>
+      <div><div class="k">Photoshoot</div><div class="v">Fri morning</div></div>
+    </div>
+  </div>
+  <div class="scrollcue">Scroll<span></span></div>
+</header>
+
+<main class="wrap">
+
+  <!-- AT A GLANCE -->
+  <section id="glance" class="reveal">
+    <div class="sec-head">
+      <span class="eyebrow">The week at a glance</span>
+      <h2>Five days, gently paced</h2>
+      <p class="measure" style="color:var(--ink-soft)">Spots are grouped by neighbourhood and ordered west-to-centre-to-north so each day is a short, walkable loop — gentle on the feet and easy on the metro. Late-July days are long and warm: first light near <b>06:20</b>, sunset close to <b>21:35</b>.</p>
+    </div>
+    <div class="glance">
+      <div class="cell"><div class="k">Day 1 · Fri</div><div class="v">Dawn &amp; Avenues</div><div class="n">Trocadéro shoot · Eiffel · Arc · Champs-Élysées</div></div>
+      <div class="cell"><div class="k">Day 2 · Sat</div><div class="v">Masterpieces</div><div class="n">Louvre · Tuileries · Orsay · Saint-Germain</div></div>
+      <div class="cell"><div class="k">Day 3 · Sun</div><div class="v">Hilltop &amp; Isle</div><div class="n">Montmartre · Sainte-Chapelle · Notre-Dame · Marais</div></div>
+      <div class="cell"><div class="k">Day 4 · Mon</div><div class="v">Au Revoir</div><div class="n">Seine send-off · fly home</div></div>
+      <div class="cell"><div class="k">Weather</div><div class="v">24–27°C</div><div class="n">Warm, mostly clear · light layer for mornings</div></div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ARRIVAL -->
+  <section id="arrival" class="reveal">
+    <div class="sec-head">
+      <span class="eyebrow">Thursday 30 July · Afternoon</span>
+      <h2>Touchdown &amp; a soft landing</h2>
+    </div>
+    <div class="cols">
+      <div class="panel">
+        <span class="kick">From the airport</span>
+        <h3>Get in without the hassle</h3>
+        <p>With luggage and three of you, skip the RER stairs on arrival day — take a taxi from the official rank. Paris fixes the fare, so there's no meter anxiety.</p>
+        <div class="kv"><span class="a">CDG → Right Bank (flat)</span><span class="b">€56</span></div>
+        <div class="kv"><span class="a">CDG → Left Bank (flat)</span><span class="b">€65</span></div>
+        <div class="kv"><span class="a">Orly → city (flat)</span><span class="b">€36–44</span></div>
+        <div class="kv"><span class="a">Or RER B (Paris Region ticket)</span><span class="b">€14 pp</span></div>
+      </div>
+      <div class="panel">
+        <span class="kick">First evening</span>
+        <h3>Rest, then a gentle stroll</h3>
+        <p>Check in, freshen up, and keep it light — tomorrow starts before dawn. A slow riverside walk and dinner in your quartier is the perfect welcome.</p>
+        <ul>
+          <li>Pick up a <b>Navigo Easy</b> card each (€2) and load ticket-books — €2.55 a ride, valid on metro, RER, bus &amp; the Montmartre funicular.</li>
+          <li>Lay out photoshoot outfits tonight; set an early alarm once the shoot time is confirmed.</li>
+          <li>Early night — catching that first soft light tomorrow is the whole magic.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- DAYS render here -->
+  <div id="days"></div>
+
+  <hr class="rule">
+
+  <!-- VERSAILLES OPTIONAL -->
+  <section id="versailles" class="reveal">
+    <div class="sec-head">
+      <span class="eyebrow">If you'd like to add a day</span>
+      <h2>The optional royal outing</h2>
+    </div>
+    <div class="callout">
+      <div class="img" id="versaillesImg"></div>
+      <div class="in">
+        <span class="badge">Optional · full day</span>
+        <h3>Palace of Versailles</h3>
+        <p style="color:var(--ink-soft);margin:14px 0 18px">Louis XIV's gilded excess — the Hall of Mirrors, endless state apartments and gardens you could lose an afternoon in. It's spectacular, but it's a <b>full day</b> and a train ride out, so it doesn't fit a departure afternoon. If you want it, swap it into <b>Saturday</b> or <b>Sunday</b> and keep Monday for a relaxed send-off.</p>
+        <div class="meta" style="margin-top:0">
+          <div><div class="k">Getting there</div><div class="v">RER C → Versailles Château, ~45 min</div></div>
+          <div><div class="k">Ticket (Passport)</div><div class="v">€24 · gardens incl.</div></div>
+          <div><div class="k">Closed</div><div class="v">Mondays</div></div>
+          <div><div class="k">Tip</div><div class="v">Book a timed slot; go early</div></div>
+        </div>
+        <div class="chips">
+          <a class="chip book" href="https://www.chateauversailles.fr/" target="_blank" rel="noopener"><span class="d"></span>Official booking</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ESSENTIALS -->
+  <section id="essentials" class="reveal">
+    <div class="sec-head">
+      <span class="eyebrow">Know-how</span>
+      <h2>The traveller's essentials</h2>
+    </div>
+
+    <div class="cols">
+      <div class="panel">
+        <span class="kick">Getting around</span>
+        <h3>Metro, on foot, by taxi</h3>
+        <ul>
+          <li><b>Navigo Easy card</b> (€2) loaded with tickets — €2.55 metro/RER/train, €2.05 bus. One card can't be shared across turnstiles, so one each.</li>
+          <li>Central Paris is compact — most days here are <b>walkable loops</b>. The metro is for the longer hops (Eiffel→Arc, Montmartre→Cité).</li>
+          <li>The <b>Montmartre funicular</b> takes a normal metro ticket — no separate fare.</li>
+          <li>Taxis &amp; Uber are easy; keep the airport <b>flat fares</b> in mind for the return.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <span class="kick">Money &amp; markets</span>
+        <h3>Cards everywhere, a little cash</h3>
+        <ul>
+          <li>Contactless cards &amp; phones work almost everywhere. Carry <b>~€40 cash</b> for falafel, market stalls and tips.</li>
+          <li>Restaurant service is included — round up or leave a euro or two for good service.</li>
+          <li>Tap water is free and safe — ask for <i>une carafe d'eau</i>.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <span class="kick">Staying comfortable</span>
+        <h3>Gentle on the feet</h3>
+        <ul>
+          <li><b>Lifts:</b> Eiffel (to summit) and the Montmartre funicular avoid the stairs. The Arc has a lift for reduced mobility — ask staff. A boon if anyone in the party tires easily.</li>
+          <li><b>Rest stops:</b> Tuileries' green chairs by the fountains and Place des Vosges arcades are made for pausing.</li>
+          <li><b>Cobbles</b> in Montmartre &amp; the Marais — cushioned, closed shoes beat sandals.</li>
+          <li>Carry water; late-July afternoons hit the mid-20s.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <span class="kick">Stay sharp</span>
+        <h3>Petty theft, simply avoided</h3>
+        <ul>
+          <li>Pickpockets work <b>Trocadéro, the Eiffel lawns, metro Line 1, the Champs</b> and Montmartre steps. Bags zipped &amp; in front.</li>
+          <li>Ignore the "gold ring" and friendship-bracelet approaches — polite <i>non merci</i> and keep walking.</li>
+          <li>Phones out of back pockets on the metro.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- booking checklist -->
+    <div class="sec-head" style="margin-top:64px">
+      <span class="eyebrow">Reserve before you fly</span>
+      <h2>The advance-booking checklist</h2>
+      <p class="measure" style="color:var(--ink-soft)">July–August is peak season — these sell out or require timed slots. Lock them in now so nothing runs on luck.</p>
+    </div>
+    <div class="check">
+      <div class="item"><div class="box"></div><div class="t"><b>Photographer</b><span>Confirm the Friday-morning shoot — time, location &amp; a rain date.</span></div></div>
+      <div class="item"><div class="box"></div><div class="t"><b>Eiffel Tower summit</b><span>Lift-to-summit slots vanish first. Book the morning of Day 1.</span></div></div>
+      <div class="item"><div class="box"></div><div class="t"><b>Louvre timed entry</b><span>Reservations required Jul–Aug, even to walk straight in.</span></div></div>
+      <div class="item"><div class="box"></div><div class="t"><b>Sainte-Chapelle</b><span>Timed ticket — pick a late-morning slot for the best light.</span></div></div>
+      <div class="item"><div class="box"></div><div class="t"><b>Notre-Dame nave</b><span>Free timed slot opens only 2–3 days before — set a reminder.</span></div></div>
+      <div class="item"><div class="box"></div><div class="t"><b>Musée d'Orsay</b><span>Online entry €16 — skips the exterior queue.</span></div></div>
+      <div class="item"><div class="box"></div><div class="t"><b>Arc de Triomphe</b><span>Optional rooftop — buy same-week; rarely sells out.</span></div></div>
+      <div class="item"><div class="box"></div><div class="t"><b>Return taxi</b><span>Pre-book for Monday afternoon so the flight home is stress-free.</span></div></div>
+    </div>
+
+    <!-- phrases + at a glance costs -->
+    <div class="cols" style="margin-top:64px">
+      <div class="panel">
+        <span class="kick">A few kind words</span>
+        <h3>Un peu de français</h3>
+        <div class="phrase"><span class="fr">Bonjour !</span><span class="en">Hello (always open with it)</span><span class="ph">bawn-ZHOOR</span></div>
+        <div class="phrase"><span class="fr">S'il vous plaît</span><span class="en">Please</span><span class="ph">seel-voo-PLEH</span></div>
+        <div class="phrase"><span class="fr">Merci beaucoup</span><span class="en">Thank you very much</span><span class="ph">mair-SEE bo-KOO</span></div>
+        <div class="phrase"><span class="fr">L'addition, s'il vous plaît</span><span class="en">The bill, please</span><span class="ph">la-dee-SYON</span></div>
+        <div class="phrase"><span class="fr">Une photo, s'il vous plaît ?</span><span class="en">A photo, please?</span><span class="ph">ewn foto</span></div>
+        <div class="phrase"><span class="fr">Non merci</span><span class="en">No thank you (to hawkers)</span><span class="ph">nawn mair-SEE</span></div>
+      </div>
+      <div class="panel">
+        <span class="kick">Ticket prices at a glance</span>
+        <h3>What things cost (2026)</h3>
+        <div class="kv"><span class="a">Eiffel — summit by lift</span><span class="b">€36.70</span></div>
+        <div class="kv"><span class="a">Eiffel — 2nd floor by lift</span><span class="b">€23.50</span></div>
+        <div class="kv"><span class="a">Louvre (non-EEA / EEA)</span><span class="b">€32 / €22</span></div>
+        <div class="kv"><span class="a">Musée d'Orsay (online)</span><span class="b">€16</span></div>
+        <div class="kv"><span class="a">Sainte-Chapelle</span><span class="b">€13</span></div>
+        <div class="kv"><span class="a">Notre-Dame nave</span><span class="b">Free</span></div>
+        <div class="kv"><span class="a">Arc de Triomphe rooftop</span><span class="b">€22</span></div>
+        <div class="kv"><span class="a">Sacré-Cœur basilica</span><span class="b">Free</span></div>
+        <div class="kv"><span class="a">Metro single ride</span><span class="b">€2.55</span></div>
+        <div class="kv"><span class="a">Emergency (EU-wide)</span><span class="b">112</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="reveal">
+  <div class="fx">Bon voyage <span class="amp">·</span> à bientôt, Paris</div>
+  <div class="meta">
+    <div><div class="k" style="font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)">Dates</div><div class="v" style="font-family:var(--serif);font-size:1.3rem;margin-top:6px">30 Jul – 3 Aug 2026</div></div>
+    <div><div class="k" style="font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)">City</div><div class="v" style="font-family:var(--serif);font-size:1.3rem;margin-top:6px">Paris, France</div></div>
+    <div><div class="k" style="font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)">Occasion</div><div class="v" style="font-family:var(--serif);font-size:1.3rem;margin-top:6px">Pre-wedding</div></div>
+  </div>
+  <p class="note">Prices &amp; hours reflect 2026 published rates and can change — reconfirm on official sites when booking. Photography by Wikimedia Commons contributors. Arranged with love, and a bias toward slow mornings and good coffee.</p>
+</footer>
+
+<script src="images.js"></script>
+<script>
+const IMG = window.IMG || {};
+
+const DAYS = [
+  {
+    id:"day1", num:"01", dow:"Friday 31 July", title:"Dawn &amp; Grand Avenues",
+    zone:"The 16th → 8th · western Paris, a single graceful sweep", hero:"trocadero",
+    ribbon:"Pre-wedding shoot",
+    stops:[
+      { time:"Early AM", kind:"Photoshoot · to confirm", romance:true, img:"trocadero", name:"Pre-wedding photoshoot",
+        lede:"The morning opens with your pre-wedding shoot, in that soft first light before the city wakes. Location and exact time are still being finalised with the photographer — this slot is held open for it. Trocadéro (Eiffel Tower framed across the esplanade) is the classic choice and sits right by today's route, but Pont Alexandre III, the Louvre courtyards and Montmartre are all beautiful alternatives.",
+        meta:[["Slot","Early morning — to confirm"],["First light","≈ 06:20 (late July)"],["Duration","≈ 60–90 min"],["Location","TBC with photographer"]],
+        tips:[
+          "<b>Sunrise light is worth the early alarm</b> — plazas are empty and the glow is golden; aim to be in position before ~06:20.",
+          "Lock in the <b>time &amp; spot</b> once your photographer confirms, then slot it here.",
+          "If you shoot at Trocadéro, you're already beside the Eiffel Tower for the next stop — a seamless morning.",
+          ["warn","Personal photography is fine anywhere; a large commercial rig with lighting may need a city permit — check with your photographer."],
+          ["warn","Keep bags zipped and close — popular spots draw early pickpockets even at dawn."],
+          "Warm up afterwards with a café crème nearby before the day begins."
+        ],
+        chips:[["book","Find a Paris photographer","https://www.google.com/search?q=paris+pre-wedding+sunrise+photographer"]]
+      },
+      { time:"09:00", kind:"Landmark", img:"eiffel", name:"Eiffel Tower",
+        lede:"Make your way to the Iron Lady and go up as she opens — summit by lift for the sweeping panorama over the whole city, the Seine threading below. (If the shoot was at Trocadéro, you're already at her feet.)",
+        meta:[["Hours (summer)","09:00–00:45"],["Summit by lift","€36.70"],["2nd floor by lift","€23.50"],["Book","Ahead — summit sells out"]],
+        tips:[
+          "Pre-book a <b>summit lift</b> slot the moment you plan the day — the top goes first.",
+          "There's a lift all the way up, ideal for taking it easy.",
+          "Champ de Mars lawn behind the tower is a lovely spot to sit after."
+        ],
+        chips:[["book","Official tickets","https://www.toureiffel.paris/en"]]
+      },
+      { time:"13:00", kind:"Lunch", img:"seine", name:"Lunch by the river",
+        lede:"Grab a bakery lunch on Rue Cler or picnic on the Champ de Mars, then hop the metro up to the Étoile for the afternoon's grand finale.",
+        meta:[["Idea","Rue Cler market street"],["Or","Champ de Mars picnic"],["Then","Metro L6/L9 → Étoile"]],
+        tips:["Rue Cler is a pedestrian food street — cheese, baguette, fruit, done."]
+      },
+      { time:"15:00", kind:"Landmark", img:"arc", name:"Arc de Triomphe",
+        lede:"Napoleon's colossal arch anchoring twelve radiating avenues. Climb (or lift) to the rooftop for the star-burst view — arguably a better Paris panorama than the Eiffel, because the Eiffel is in it.",
+        meta:[["Hours (summer)","10:00–23:00"],["Rooftop","€22"],["Steps","284 (lift for access)"],["Reach it","Underground tunnel only"]],
+        tips:[
+          ["warn","Never cross the roundabout — use the <b>pedestrian underpass</b> from the Champs-Élysées corner."],
+          "Ask staff about the lift if the stairs are too much.",
+          "Golden hour up here is magic if you'd rather swap the timing later."
+        ],
+        chips:[["","Official site","https://www.paris-arc-de-triomphe.fr/en"]]
+      },
+      { time:"17:00", kind:"Stroll · Shopping", img:"champs", name:"Champs-Élysées → Concorde",
+        lede:"Walk the world's grandest avenue downhill — flagship stores, cafés and plane trees — ending at the obelisk-crowned Place de la Concorde, with the Tuileries and tomorrow's Louvre glowing beyond.",
+        meta:[["Walk","1.9 km · ~25 min, all downhill"],["Ends at","Place de la Concorde"],["Evening","Dinner nearby"]],
+        tips:[
+          "Ladurée on the Champs for macarons if the sweet tooth calls.",
+          "After dark the Eiffel <b>sparkles for 5 minutes on the hour</b> — first sparkle ~22:00 in summer. Worth doubling back or catching from Concorde."
+        ]
+      }
+    ],
+    hops:[
+      {ico:"🚶", txt:"<b>Photoshoot → Eiffel Tower</b> · if at Trocadéro, 0.9 km across the Pont d'Iéna · ~12 min walk"},
+      {ico:"🥖", txt:"<b>Eiffel → Rue Cler</b> · 0.8 km · ~10 min walk"},
+      {ico:"🚇", txt:"<b>Lunch → Arc de Triomphe</b> · Metro L6/L9 to Charles de Gaulle–Étoile · ~15 min"},
+      {ico:"🚶", txt:"<b>Arc → Concorde</b> · walk the full Champs-Élysées · 1.9 km · ~25 min"}
+    ]
+  },
+
+  {
+    id:"day2", num:"02", dow:"Saturday 1 August", title:"Masterpieces &amp; the Left Bank",
+    zone:"The 1st → 7th → 6th · the Seine's cultural heart", hero:"pyramid",
+    stops:[
+      { time:"09:00", kind:"Museum", img:"pyramid", name:"The Louvre",
+        lede:"Start as the doors open, beat the crowd to the Mona Lisa, then let the Winged Victory and Venus de Milo carry you through the world's greatest museum. Two focused hours beats a weary four.",
+        meta:[["Hours","09:00–18:00 (Wed/Fri to 21:45)"],["Ticket","€32 non-EEA / €22 EEA"],["Mona Lisa","Denon wing, Room 711"],["Closed","Tuesdays"]],
+        tips:[
+          "Reservations are <b>required in Jul–Aug</b> — book a 09:00 slot and enter via the Carrousel to skip the pyramid line.",
+          "Make a beeline: Mona Lisa → Winged Victory → Venus de Milo → Napoleon Apartments.",
+          "Under-18s (and EEA under-26s) go free."
+        ],
+        chips:[["book","Book timed entry","https://www.louvre.fr/en/visit"]]
+      },
+      { time:"12:00", kind:"Garden", img:"tuileries", name:"Jardin des Tuileries",
+        lede:"Walk straight out of the Louvre into Paris's most elegant garden — gravel avenues, round basins, and those iconic green chairs begging you to sit. It links the Louvre to Concorde with zero navigation.",
+        meta:[["Walk-through","~1 km, Louvre → Concorde"],["Do","Sit by the grand basin"],["Treat","Ice cream / a summer café"]],
+        tips:["Drag a green chair to the fountain edge — the classic Parisian rest.","A gentle, flat stretch — perfect mid-day breather."]
+      },
+      { time:"14:00", kind:"Museum", img:"orsay", name:"Musée d'Orsay",
+        lede:"Cross the river to a former railway station now packed with the Impressionists — Monet, Renoir, Degas and the top-floor Van Goghs beneath that famous golden clock.",
+        meta:[["Hours","09:30–18:00 (Thu to 21:45)"],["Ticket","€16 online"],["Closed","Mondays"],["Don't miss","Top-floor clock &amp; Van Gogh"]],
+        tips:[
+          "Photograph the city through the giant <b>glass clock</b> on level 5.",
+          "Much smaller than the Louvre — two relaxed hours is plenty."
+        ],
+        chips:[["book","Book online","https://www.musee-orsay.fr/en/visit"]]
+      },
+      { time:"17:30", kind:"Neighbourhood", img:"saintgermain", name:"Saint-Germain-des-Prés",
+        lede:"End on the Left Bank's literary boulevards — Café de Flore and Les Deux Magots, chocolate at Pierre Hermé, book-lined windows and the perfect apéro to close the day.",
+        meta:[["Coffee","Café de Flore · Les Deux Magots"],["Wander","Boutiques &amp; galleries"],["Evening","Dinner in the 6th"]],
+        tips:["A café crème at Flore is a rite of passage — pay the premium once, gladly.","Shakespeare &amp; Company bookshop is a short walk east by Notre-Dame if you want a peek tonight."]
+      }
+    ],
+    hops:[
+      {ico:"🌳", txt:"<b>Louvre → Tuileries</b> · you exit straight into the garden · 0 navigation"},
+      {ico:"🚶", txt:"<b>Tuileries → Orsay</b> · 0.6 km across the Passerelle/Pont Royal · ~9 min walk"},
+      {ico:"🚶", txt:"<b>Orsay → Saint-Germain</b> · 0.8 km · ~10 min walk"}
+    ]
+  },
+
+  {
+    id:"day3", num:"03", dow:"Sunday 2 August", title:"Hilltop &amp; the Old City",
+    zone:"The 18th → 4th · north hill down to the Seine islands", hero:"montmartre",
+    stops:[
+      { time:"08:30", kind:"Basilica · Village", img:"montmartre", name:"Montmartre &amp; Sacré-Cœur",
+        lede:"Ride the funicular up the hill before the crowds wake. The white domes of Sacré-Cœur, all of Paris spread below from the steps, then the artists' easels of Place du Tertre and ivy-hung lanes.",
+        meta:[["Funicular","Takes a normal metro ticket"],["Basilica","Free · opens 06:30"],["Best","Go early — it fills fast"],["Then","Metro L4 south to the isle"]],
+        tips:[
+          "Early morning = the basilica almost to yourselves and clean panorama photos.",
+          ["warn","Firmly decline anyone trying to tie a 'friendship bracelet' on the steps."],
+          "No photos inside the nave; shoot the exterior and the viewpoint."
+        ]
+      },
+      { time:"11:30", kind:"Monument", img:"saintechapelle", name:"Sainte-Chapelle",
+        lede:"A jewel-box chapel whose upper level is fifteen soaring walls of 13th-century stained glass — 1,100 scenes lit like a lantern. Time it for late morning when the sun pours through.",
+        meta:[["Hours","09:00–19:00"],["Ticket","€13 (timed)"],["Magic hour","Late morning / midday sun"],["Location","On the Île de la Cité"]],
+        tips:[
+          "Book a <b>late-morning slot</b> — the glass blazes when the sun hits it.",
+          "It's inside the courthouse complex; allow a moment for the security check."
+        ],
+        chips:[["book","Book timed ticket","https://www.sainte-chapelle.fr/en"]]
+      },
+      { time:"13:00", kind:"Cathedral", img:"notredame", name:"Notre-Dame de Paris",
+        lede:"Six minutes' walk away, the reborn cathedral — reopened December 2024 after the fire, her stone scrubbed luminous. Admire the Gothic façade and gargoyles; step inside the restored nave if you've reserved.",
+        meta:[["Nave","Free entry"],["Hours (Sun)","08:15–19:30"],["Reserve","Free timed slot, 2–3 days ahead"],["Walk from S-Chapelle","~6 min"]],
+        tips:[
+          "Grab the <b>free timed nave slot</b> 2–3 days before to skip the long walk-in queue.",
+          "Lunch break: falafel or a bistro on the isle before crossing to the Marais."
+        ],
+        chips:[["","Reserve the nave","https://www.notredamedeparis.fr/en/"]]
+      },
+      { time:"15:30", kind:"Neighbourhood", img:"marais", name:"Le Marais &amp; Place des Vosges",
+        lede:"Cross to the Right Bank's most charming quarter — medieval lanes, designer boutiques, hidden mansions, and the perfectly symmetrical arcades of Place des Vosges. Sunday is when the Marais is liveliest.",
+        meta:[["Eat","L'As du Fallafel, Rue des Rosiers"],["Sit","Place des Vosges arcades"],["Sunday","Shops open — rare in Paris"],["Evening","Dinner in the Marais"]],
+        tips:[
+          "The falafel queue on Rue des Rosiers moves fast and is worth it.",
+          "Rest under the Place des Vosges arcades — Victor Hugo's house is on the square.",
+          "One of the few districts buzzing on a Sunday, so you've timed it perfectly."
+        ]
+      }
+    ],
+    hops:[
+      {ico:"🚡", txt:"<b>Up to Sacré-Cœur</b> · Montmartre funicular · uses a normal metro ticket"},
+      {ico:"🚇", txt:"<b>Montmartre → Île de la Cité</b> · Metro Line 4 south · ~25 min"},
+      {ico:"🚶", txt:"<b>Sainte-Chapelle → Notre-Dame</b> · 0.4 km via the Parvis · ~6 min walk"},
+      {ico:"🚶", txt:"<b>Notre-Dame → Le Marais</b> · 1.0 km across the Seine · ~13 min walk"}
+    ]
+  },
+
+  {
+    id:"day4", num:"04", dow:"Monday 3 August", title:"Au Revoir, Paris",
+    zone:"Departure day · afternoon flight home to the UK", hero:"seine",
+    stops:[
+      { time:"09:00", kind:"Slow morning", img:"seine", name:"A Seine send-off",
+        lede:"Keep the last morning easy with luggage in mind. A slow coffee, one final riverside walk over the gilded Pont Alexandre III — Paris's most beautiful bridge — and a last look at the skyline you've come to know.",
+        meta:[["Idea","Coffee + Pont Alexandre III photos"],["Or","Latin Quarter / riverside browse"],["Keep it","Light — near your hotel"],["Note","Most museums closed Mondays"]],
+        tips:[
+          "The Pont Alexandre III's golden statues and lamps make a gorgeous final photo — a lovely bookend to Friday's sunrise.",
+          "Skip anything ticketed today; a leisurely wander is the right note."
+        ]
+      },
+      { time:"12:30", kind:"Departure", img:"concorde", name:"To the airport",
+        lede:"Collect the bags, settle up, and take a pre-booked taxi to the airport for your afternoon flight home — full of photographs and a proposal-week's worth of memories.",
+        meta:[["Taxi (flat)","€56–65 to CDG"],["Leave by","~3 hrs before international"],["Buy","Water &amp; a last croissant"],["Then","Home to the UK ✈"]],
+        tips:["Pre-book the taxi the night before so the morning stays calm.","Macarons or a tin of tea from a fromagerie/épicerie make easy gifts home."]
+      }
+    ],
+    hops:[
+      {ico:"🚶", txt:"<b>Riverside → hotel</b> · keep it short with luggage waiting"},
+      {ico:"🚕", txt:"<b>Hotel → CDG</b> · flat-fare taxi · ~45–60 min · pre-book it"}
+    ]
+  }
+];
+
+/* ---------- render ---------- */
+function chipHTML(c){
+  const cls = c[0]==="book" ? "chip book" : "chip";
+  return `<a class="${cls}" href="${c[2]}" target="_blank" rel="noopener"><span class="d"></span>${c[1]}</a>`;
+}
+function tipHTML(t){
+  if(Array.isArray(t)) return `<li class="${t[0]}">${t[1]}</li>`;
+  return `<li>${t}</li>`;
+}
+function metaHTML(m){
+  return `<div class="meta">${m.map(x=>`<div><div class="k">${x[0]}</div><div class="v">${x[1]}</div></div>`).join("")}</div>`;
+}
+function stopHTML(s){
+  const rc = s.romance ? " romance" : "";
+  return `
+  <div class="stop${rc}">
+    <div class="dot"></div>
+    <span class="time">${s.time}</span><span class="kind">${s.kind}</span>
+    <div class="card${rc}">
+      <div class="media"><img loading="lazy" src="${IMG[s.img]||''}" alt="${s.name}"></div>
+      <div class="body">
+        <h4>${s.name}</h4>
+        <p class="lede">${s.lede}</p>
+        ${s.meta?metaHTML(s.meta):""}
+        ${s.tips?`<ul class="tips">${s.tips.map(tipHTML).join("")}</ul>`:""}
+        ${s.chips?`<div class="chips">${s.chips.map(chipHTML).join("")}</div>`:""}
+      </div>
+    </div>
+  </div>`;
+}
+function dayHTML(d){
+  // interleave stops with hops
+  let seq = "";
+  d.stops.forEach((s,i)=>{
+    seq += stopHTML(s);
+    if(d.hops && d.hops[i]) seq += `<div class="hop"><span class="ico">${d.hops[i].ico}</span><span class="txt">${d.hops[i].txt}</span></div>`;
+  });
+  return `
+  <section class="day reveal" id="${d.id}">
+    <div class="day-hero">
+      ${d.ribbon?`<span class="ribbon">✦ ${d.ribbon}</span>`:""}
+      <img src="${IMG[d.hero]||''}" alt="${d.title}">
+      <div class="grad"></div>
+      <div class="cap">
+        <div class="num">${d.num}</div>
+        <div class="dow">${d.dow}</div>
+        <h3>${d.title}</h3>
+        <div class="zone">${d.zone}</div>
+      </div>
+    </div>
+    <div class="timeline">${seq}</div>
+  </section>`;
+}
+
+document.getElementById("days").innerHTML = DAYS.map(dayHTML).join('<hr class="rule" style="margin:20px 0">');
+
+/* hero + versailles bg */
+document.getElementById("heroBg").style.backgroundImage = `url(${IMG.trocadero||''})`;
+document.getElementById("versaillesImg").style.backgroundImage = `url(${IMG.versailles||''})`;
+
+/* reveal on scroll */
+const io = new IntersectionObserver((es)=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} });
+},{threshold:0, rootMargin:"0px 0px -12% 0px"});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+/* safety net: never leave content hidden if the observer misses (e.g. tall sections, deep-links) */
+setTimeout(()=>document.querySelectorAll(".reveal:not(.in)").forEach(el=>{
+  const r=el.getBoundingClientRect();
+  if(r.top < innerHeight*1.1) el.classList.add("in");
+}),1200);
+
+/* progress bar + active nav */
+const bar = document.getElementById("bar");
+const navLinks = [...document.querySelectorAll("nav.days a")];
+const sections = navLinks.map(a=>document.querySelector(a.getAttribute("href")));
+function onScroll(){
+  const h = document.documentElement;
+  const p = h.scrollTop/(h.scrollHeight-h.clientHeight);
+  bar.style.width = (p*100)+"%";
+  let idx=0;
+  sections.forEach((s,i)=>{ if(s && s.getBoundingClientRect().top<160) idx=i; });
+  navLinks.forEach((a,i)=>a.classList.toggle("active",i===idx));
+}
+document.addEventListener("scroll",onScroll,{passive:true});
+window.addEventListener("resize",onScroll);
+onScroll();
+
+navLinks.forEach(a=>a.addEventListener("click",e=>{
+  const t=document.querySelector(a.getAttribute("href"));
+  if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth",block:"start"});}
+}));
+
+/* theme toggle */
+const root=document.documentElement;
+document.getElementById("themeBtn").addEventListener("click",()=>{
+  const cur=root.getAttribute("data-theme");
+  const isDark = cur ? cur==="dark" : matchMedia("(prefers-color-scheme:dark)").matches;
+  root.setAttribute("data-theme", isDark?"light":"dark");
+});
+</script>
+
+</body>
+</html>
