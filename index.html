@@ -838,9 +838,10 @@ const navLinks = [...document.querySelectorAll("nav.days .row a")];
 const sections = navLinks.map(a=>document.querySelector(a.getAttribute("href")));
 function onScroll(){
   const h = document.documentElement;
-  const p = h.scrollTop/(h.scrollHeight-h.clientHeight);
-  bar.style.width = (p*100)+"%";
-  toTop.classList.toggle("show", h.scrollTop>700);
+  const y = window.scrollY || window.pageYOffset || h.scrollTop || 0;
+  const max = (h.scrollHeight - h.clientHeight) || 1;
+  bar.style.width = (Math.min(Math.max(y/max,0),1)*100)+"%";
+  toTop.classList.toggle("show", y>700);
   let idx=0;
   sections.forEach((s,i)=>{ if(s && s.getBoundingClientRect().top<160) idx=i; });
   navLinks.forEach((a,i)=>a.classList.toggle("active",i===idx));
