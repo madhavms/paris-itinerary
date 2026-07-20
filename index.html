@@ -65,7 +65,8 @@
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
     font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
     overflow-x:clip;overflow-wrap:break-word;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
-  html{overflow-x:clip;scroll-padding-top:60px}
+  html{overflow-x:clip;scroll-padding-top:64px;scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   img{max-width:100%;display:block}
   a{color:inherit}
   h1,h2,h3,h4{margin:0;font-weight:400;text-wrap:balance;line-height:1.05}
@@ -77,6 +78,13 @@
 
   /* progress + nav */
   #bar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--gold),var(--rose));z-index:60;transition:width .12s linear}
+  #toTop{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:55;
+    width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    display:grid;place-items:center;font-size:1.15rem;cursor:pointer;box-shadow:var(--card-sh);
+    opacity:0;transform:translateY(12px) scale(.9);pointer-events:none;transition:opacity .25s,transform .25s;-webkit-tap-highlight-color:transparent}
+  #toTop.show{opacity:1;transform:none;pointer-events:auto}
+  #toTop:hover{border-color:var(--gold);color:var(--gold)}
+  @media (prefers-reduced-motion:reduce){#toTop{transition:opacity .25s}}
   nav.days{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 86%,transparent);
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
   nav.days .nav-inner{display:flex;align-items:center;gap:8px;max-width:var(--maxw);margin:0 auto;padding:8px 16px}
@@ -145,9 +153,23 @@
     font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;padding:7px 13px;border-radius:100px;
     box-shadow:0 8px 24px -8px rgba(0,0,0,.5)}
 
+  /* day agenda (tap to jump) */
+  .agenda{display:block;margin:0 0 34px;border:1px solid var(--line);border-radius:10px;background:var(--card);overflow:hidden;box-shadow:var(--card-sh)}
+  .agenda-head{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid var(--line-soft);background:var(--gold-wash)}
+  .agenda-head .lbl{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+  .agenda-head .cnt{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+  .agenda-list{list-style:none;margin:0;padding:0}
+  .agenda-list li+li{border-top:1px solid var(--line-soft)}
+  .agenda-list a{display:flex;align-items:baseline;gap:14px;padding:13px 18px;text-decoration:none;color:var(--ink-soft);
+    transition:background .18s,color .18s;-webkit-tap-highlight-color:transparent}
+  .agenda-list a:hover,.agenda-list a:focus-visible{background:var(--gold-wash);color:var(--ink);outline:none}
+  .agenda-list .t{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--gold);font-variant-numeric:tabular-nums;min-width:66px;flex:none}
+  .agenda-list .n{font-family:var(--serif);font-size:1.08rem;line-height:1.2;flex:1 1 auto}
+  .agenda-list .chev{font-family:var(--serif);color:var(--ink-faint);font-size:1.2rem;flex:none}
+
   /* timeline */
   .timeline{position:relative;margin-left:6px}
-  .stop{position:relative;padding-left:38px;padding-bottom:8px}
+  .stop{position:relative;padding-left:38px;padding-bottom:8px;scroll-margin-top:70px}
   .stop::before{content:"";position:absolute;left:8px;top:34px;bottom:-8px;width:2px;background:var(--line)}
   .stop:last-of-type::before{display:none}
   .stop .dot{position:absolute;left:0;top:6px;width:18px;height:18px;border-radius:50%;background:var(--paper);
@@ -312,6 +334,7 @@
 </style>
 
 <div id="bar"></div>
+<button id="toTop" type="button" aria-label="Back to top">↑</button>
 
 <nav class="days">
   <div class="nav-inner">
@@ -732,12 +755,12 @@ function tipHTML(t){
 function metaHTML(m){
   return `<div class="meta">${m.map(x=>`<div><div class="k">${x[0]}</div><div class="v">${x[1]}</div></div>`).join("")}</div>`;
 }
-function stopHTML(s){
+function stopHTML(s, id){
   const rc = s.romance ? " romance" : "";
   const hasMore = s.tips || s.chips;
   const moreLabel = s.chips ? "Tips &amp; booking" : "Good to know";
   return `
-  <div class="stop${rc}">
+  <div class="stop${rc}" id="${id}">
     <div class="dot"></div>
     <span class="time">${s.time}</span><span class="kind">${s.kind}</span>
     <div class="card${rc}">
@@ -757,11 +780,20 @@ function stopHTML(s){
     </div>
   </div>`;
 }
+function agendaHTML(d){
+  const rows = d.stops.map((s,i)=>`<li><a href="#${d.id}-s${i}">
+      <span class="t">${s.time}</span><span class="n">${s.name}</span><span class="chev" aria-hidden="true">›</span>
+    </a></li>`).join("");
+  return `<nav class="agenda" aria-label="${d.title} plan">
+    <div class="agenda-head"><span class="lbl">The day</span><span class="cnt">${d.stops.length} stops</span></div>
+    <ol class="agenda-list">${rows}</ol>
+  </nav>`;
+}
 function dayHTML(d){
   // interleave stops with hops
   let seq = "";
   d.stops.forEach((s,i)=>{
-    seq += stopHTML(s);
+    seq += stopHTML(s, `${d.id}-s${i}`);
     if(d.hops && d.hops[i]) seq += `<div class="hop"><span class="ico">${d.hops[i].ico}</span><span class="txt">${d.hops[i].txt}</span></div>`;
   });
   return `
@@ -777,6 +809,7 @@ function dayHTML(d){
         <div class="zone">${d.zone}</div>
       </div>
     </div>
+    ${agendaHTML(d)}
     <div class="timeline">${seq}</div>
   </section>`;
 }
@@ -800,16 +833,19 @@ setTimeout(()=>document.querySelectorAll(".reveal:not(.in)").forEach(el=>{
 
 /* progress bar + active nav */
 const bar = document.getElementById("bar");
-const navLinks = [...document.querySelectorAll("nav.days a")];
+const toTop = document.getElementById("toTop");
+const navLinks = [...document.querySelectorAll("nav.days .row a")];
 const sections = navLinks.map(a=>document.querySelector(a.getAttribute("href")));
 function onScroll(){
   const h = document.documentElement;
   const p = h.scrollTop/(h.scrollHeight-h.clientHeight);
   bar.style.width = (p*100)+"%";
+  toTop.classList.toggle("show", h.scrollTop>700);
   let idx=0;
   sections.forEach((s,i)=>{ if(s && s.getBoundingClientRect().top<160) idx=i; });
   navLinks.forEach((a,i)=>a.classList.toggle("active",i===idx));
 }
+toTop.addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));
 document.addEventListener("scroll",onScroll,{passive:true});
 window.addEventListener("resize",onScroll);
 onScroll();
