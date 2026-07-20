@@ -15,9 +15,21 @@ Once Pages finishes its first build, the itinerary is live at:
 
 | File | What it is | Edit it? |
 |------|------------|----------|
-| `index.html` | The whole itinerary — layout, styling, and all the day-by-day **content** (in the `DAYS` data near the bottom of the file). ~48 KB, quick to open. | ✅ This is the one to edit. |
+| `index.html` | The whole itinerary — layout, styling, and all the day-by-day **content** (in the `DAYS` data near the bottom of the file). ~50 KB, quick to open. | ✅ This is the one to edit. |
 | `images.js` | The 16 landmark photos, embedded as data. ~2.6 MB. | ⛔ Rarely — only to swap a photo. |
+| `manifest.webmanifest`, `sw.js`, `icon-*.png`, `icon.svg`, `apple-touch-icon.png` | Make it an installable app that works offline. | ⛔ Leave as-is. |
 | `.github/workflows/deploy.yml` | Auto-publishes to GitHub Pages on every push. | ⛔ Leave as-is. |
+
+## 📲 Install it on your phone (works offline)
+
+The site is a Progressive Web App — add it to your home screen and it opens fullscreen,
+with its own gold-Eiffel icon, and works even without signal (handy in the Paris metro).
+
+- **iPhone (Safari):** open the live link → tap **Share** → **Add to Home Screen**.
+- **Android (Chrome):** open the live link → menu **⋮** → **Install app** / **Add to Home screen**.
+
+It stays up to date: whenever you're online it loads the latest pushed version, and falls
+back to the last-seen copy when you're offline.
 
 ## ✏️ Making changes (including from your phone)
 
